@@ -15,19 +15,18 @@ from PIL import Image
 # CLASS DEFS{{{
 class Colors:
     def __init__(self,file_path):
-        self.file_path = filepath
-        self.raw_colors = self.__parse_raw(file_path)
-        self.int_colors = str_colors_to_int(str_colors)
-        self.float_colors = list_int_to_float(int_colors)
-        self.hsv_colors = list_rgb_to_hsv(float_colors)
+        self.file_path = file_path
+        self.str_colors = self.__parse_raw(file_path)
+        self.int_colors = str_colors_to_int(self.str_colors)
+        self.float_colors = list_int_to_float(self.int_colors)
+        self.hsv_colors = list_rgb_to_hsv(self.float_colors)
 
 
-    def __parse_raw(file_path):
-        filepath = 'Bears.gpl'
+    def __parse_raw(self,file_path): 
         colors = list()
         regex = re.compile(r'^\s*\d*\s*\d*\s*\d')
         name_regex = re.compile(r'Name: (.*)')
-        with open(filepath) as gpl_file:
+        with open(file_path) as gpl_file:
             header = gpl_file.readline()
             name_line = gpl_file.readline()
             name = name_regex.match(name_line)
@@ -45,8 +44,6 @@ class Colors:
 
 # }}}
 # FUNCTION DEFS{{{
-
-
 def float_to_int(float_in):
     return int(float*255)
 
@@ -95,9 +92,10 @@ def list_rgb_to_hsv(float_colors):
 
 # }}}
 # MAIN{{{
-file_path = 'Bears.gpl'
-bears = Color(file_path)
-
+file_path = '../Bears.gpl' # This will eventually be user input
+palette1 = Colors(file_path)
+int_colors = palette1.int_colors
+hsv_colors = palette1.hsv_colors
 im_hsv = Image.new('HSV',(16,16))
 im_hsv.putdata(hsv_colors)
 im_hsv.show()
@@ -117,32 +115,6 @@ img.putdata(sorted_int_tup)
 #
 img = img.resize((256,256),resample=4)
 img.show()# }}}
-# NP ARRAY IMAGE {{{
-im_array = np.array(int_colors)
-image = list()
-
-for row in im_array:
-    image.append(np.array(row))
-im_rows = []
-im_row = []
-count = 0
-
-for item in image:
-    if count < 16:
-        im_row.append([[item[0]],[item[1]],[item[2]]])
-        count = count + 1
-    else:
-        im_rows.append(np.asarray(im_row))
-        count = 0
-        im_row = []
-        # }}}
-#  image = np.block(np.asarray(im_rows))
-#  image = np.squeeze(image)
-#  im = Image.fromarray(image, mode='RGB')
-#  print(im.getpixel((15,7)))
-#  print(image)
-#  plt.imshow(image)
-#  plt.show()
  #    }}}
 
 
