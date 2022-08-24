@@ -6,62 +6,46 @@ import matplotlib
 # from colormath.color_objects import sRGBColor, LabColor
 # from colormath.color_diff import delta_e_cie1976
 from matplotlib import pyplot as plt
-from matplotlib import image as mpimg 
+from matplotlib import image as mpimg
 import numpy as np
 # import custom_color_palette as ccp
 import colorsys
 import random as rand
 from PIL import Image
 # CLASS DEFS{{{
-class Color:
+class Colors:
+    def __init__(self,file_path):
+        self.file_path = filepath
+        self.raw_colors = self.__parse_raw(file_path)
+        self.int_colors = str_colors_to_int(str_colors)
+        self.float_colors = list_int_to_float(int_colors)
+        self.hsv_colors = list_rgb_to_hsv(float_colors)
 
-    def __init__(self,RGB):
-        self.RGB = RGB
-        self.name = ""
 
-class Palette: 
-
-    def __init__(self,name,colors):
-        sRGB = list()
-        self.name = name
-        self.colors = colors
+    def __parse_raw(file_path):
+        filepath = 'Bears.gpl'
+        colors = list()
+        regex = re.compile(r'^\s*\d*\s*\d*\s*\d')
+        name_regex = re.compile(r'Name: (.*)')
+        with open(filepath) as gpl_file:
+            header = gpl_file.readline()
+            name_line = gpl_file.readline()
+            name = name_regex.match(name_line)
+            name = name.group(1)
+            for line in gpl_file:
+                raw = regex.match(line)
+                if raw is not None:
+                    RGB  = raw.group()
+                    colors.append(RGB)
+        colors = [c.strip() for c in colors]
+        str_colors = list()
         for c in colors:
-            sRGB.append(make_sRGB(c))
-        self.sRGB = sRGB
+            str_colors.append(c.split())
+        return str_colors
 
-    def print_pal(self):
-        print('Name: ',name)
-        for color in colors:
-            print(color.RGB)
-   
-       #
-# class RGB:
-#
-#     def __init__(self,RGB_raw):
-#         self.RGB_raw = RGB_raw
-#         self.RGB = parse_RGB(RGB_raw)
-#
-#     def set_RGB(RGB_raw):
-#         self.RGB_raw = RGB_raw
-        # self.RGB = parse_RGB(RGB_raw)
 # }}}
 # FUNCTION DEFS{{{
-def parse_RGB(RGB_raw):
-    RGB = RGB_raw.strip().split()
 
-    for i in range(3):
-        RGB[i] = int(RGB[i])
-
-    return RGB
-#
-#
-# def make_sRGB(color):
-#     RGB = color.RGB
-#     r = RGB[0]
-#     g = RGB[1]
-#     b = RGB[2]
-#
-    # return sRGBColor(r,g,b,True)
 
 def float_to_int(float_in):
     return int(float*255)
@@ -84,15 +68,15 @@ def list_int_to_float(list_in):
         if type(item) is list:
             list_int_to_float(item)
         elif type(item) is int:
-           float_list_out.append(int_to_float(item))     
+           float_list_out.append(int_to_float(item))
     return float_list_out
 
 def str_colors_to_int(str_colors):
        int_colors = list()
-       for c in str_colors: 
+       for c in str_colors:
            temp = []
            for val in c:
-               temp.append(int(val)) 
+               temp.append(int(val))
            int_colors.append(tuple(temp))
        return int_colors
 
@@ -108,35 +92,12 @@ def list_rgb_to_hsv(float_colors):
             count = count + 1
         tup = tuple(temp)
     return hsv_colors
-     
 
 # }}}
 # MAIN{{{
+file_path = 'Bears.gpl'
+bears = Color(file_path)
 
-filepath = 'Bears.gpl'
-colors = list() 
-regex = re.compile(r'^\s*\d*\s*\d*\s*\d')
-name_regex = re.compile(r'Name: (.*)')
-with open(filepath) as gpl_file:
-    header = gpl_file.readline()
-    name_line = gpl_file.readline()
-    name = name_regex.match(name_line)
-    name = name.group(1)
-    for line in gpl_file:
-        raw = regex.match(line)
-        if raw is not None:
-            RGB  = raw.group()
-            colors.append(RGB)
-
-colors = [c.strip() for c in colors]
-str_colors = list()
-for c in colors:
-    str_colors.append(c.split())
-
-int_colors = str_colors_to_int(str_colors)
-float_colors = list_int_to_float(int_colors)
-
-hsv_colors = list_rgb_to_hsv(float_colors)
 im_hsv = Image.new('HSV',(16,16))
 im_hsv.putdata(hsv_colors)
 im_hsv.show()
@@ -182,6 +143,6 @@ for item in image:
 #  print(image)
 #  plt.imshow(image)
 #  plt.show()
-#    }}}
+ #    }}}
 
 
