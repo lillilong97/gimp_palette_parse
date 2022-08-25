@@ -1,50 +1,19 @@
 # oy
 # gonna parse some gimp palettes 
 
-import re
-import matplotlib
-# from colormath.color_objects import sRGBColor, LabColor
-# from colormath.color_diff import delta_e_cie1976
+# IMPORT STATEMENTS{{{
+import gimp_palette_parser as gpp # module file I wrote 
+from gpp import * # gonna use the module file as the namespace basically
+                  # hoping to avoid rewriting anything 
+                  # ideally this will function as if all of the stuff defined in
+                  # the module was writtin in this file
+
+import re   # regular expressions
+import matplotlib   #matlab-like plotting 
 from matplotlib import pyplot as plt
-from matplotlib import image as mpimg
-import numpy as np
-# import custom_color_palette as ccp
-import colorsys
-import random as rand
-from PIL import Image
-# CLASS DEFS{{{
-class Colors:
-    def __init__(self,file_path):
-        self.file_path = file_path
-        self.str_colors = self.__parse_raw(file_path)
-        self.int_colors = str_colors_to_int(self.str_colors)
-        self.float_colors = list_int_to_float(self.int_colors)
-        self.hsv_colors = list_rgb_to_hsv(self.float_colors)
-
-
-    def __parse_raw(self,file_path): 
-        colors = list()
-        regex = re.compile(r'^\s*\d*\s*\d*\s*\d')
-        name_regex = re.compile(r'Name: (.*)')
-        with open(file_path) as gpl_file:
-            header = gpl_file.readline()
-            name_line = gpl_file.readline()
-            name = name_regex.match(name_line)
-            name = name.group(1)
-            for line in gpl_file:
-                raw = regex.match(line)
-                if raw is not None:
-                    RGB  = raw.group()
-                    colors.append(RGB)
-        colors = [c.strip() for c in colors]
-        str_colors = list()
-        for c in colors:
-            str_colors.append(c.split())
-        return str_colors
-    def color_print(self, color_model):
-       pass 
-# }}}
-# FUNCTION DEFS{{{
+import numpy as np  # make python do arrays like matlab
+import colorsys     # convert values between colorspaces 
+from PIL import Image   # export palettes as images so you can preview your work
 # }}}
 # MAIN{{{
 file_path = '../Bears.gpl' # This will eventually be user input
