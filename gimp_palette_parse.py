@@ -1,5 +1,6 @@
 # GIMP_PALETTE_PARSER.PY
 # IMPORT THIS MODULE TO USE FUNCTIONS IN MAIN FILE 
+import re
 # FUNCTION DEFS{{{
 def float_to_int(float_in):
     return int(float*255)
