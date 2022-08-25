@@ -1,4 +1,4 @@
- # gimp_palette_sort
+ # gimp_palette_parse
 
 this package is intended to parse and sort gimp palettes (filetype: .GPL)
 
