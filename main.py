@@ -2,11 +2,6 @@
 # gonna parse some gimp palettes 
 
 # IMPORT STATEMENTS{{{
-import gimp_palette_parse # module file I wrote 
-from gimp_palette_parse import * # gonna use the module file as the namespace basically
-                  # hoping to avoid rewriting anything 
-                  # ideally this will function as if all of the stuff defined in
-                  # the module was writtin in this file
 
 import re   # regular expressions
 import matplotlib   #matlab-like plotting 
@@ -14,10 +9,11 @@ from matplotlib import pyplot as plt
 import numpy as np  # make python do arrays like matlab
 import colorsys     # convert values between colorspaces 
 from PIL import Image   # export palettes as images so you can preview your work
+import gimp_palette_parse as gpp # module file I wrote 
 # }}}
 # MAIN{{{
 file_path = '../Bears.gpl' # This will eventually be user input
-palette1 = gimp_palette_parse.Colors(file_path)
+palette1 = gpp.Colors(file_path)
 int_colors = palette1.int_colors
 hsv_colors = palette1.hsv_colors
 print(int_colors)
