@@ -34,9 +34,9 @@ def str_colors_to_int(str_colors):
            int_colors.append(tuple(temp))
        return int_colors
 
-def list_rgb_to_hsv(float_colors):
+def list_rgb_to_hsv(rgb_float_colors):
     hsv_colors = []
-    for i in float_colors:
+    for i in rgb_float_colors:
         hsv_colors.append(tuple(colorsys.rgb_to_hsv(i[0],i[1],i[2])))
     for tup in hsv_colors:
         count = 0
