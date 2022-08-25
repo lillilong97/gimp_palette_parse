@@ -1,2 +1,5 @@
 # ignore swap files
 *.swp
+
+# ingore __init__.py
+__init__.py

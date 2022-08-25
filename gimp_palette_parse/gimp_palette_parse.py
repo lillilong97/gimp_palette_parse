@@ -52,6 +52,8 @@ class Colors:
     def __init__(self,file_path):
         self.file_path = file_path
         self.str_colors = self.__parse_raw(file_path)
+        print('yay color')
+        print(self.str_colors)
         self.int_colors = str_colors_to_int(self.str_colors)
         self.float_colors = list_int_to_float(self.int_colors)
         self.hsv_colors = list_rgb_to_hsv(self.float_colors)
@@ -76,5 +78,18 @@ class Colors:
         for c in colors:
             str_colors.append(c.split())
         return str_colors
+
     def color_print(self, color_model):
-       pass # }}}
+        #  0 = int_colors
+        #  1 = float_colors
+        #  2 = hsv_colors
+        #  3 = str_colors
+        if color_model == 0:
+            print(self.int_colors)
+        elif color_model == 1:
+            print(self.float_colors)
+        elif color_model == 2:
+            print(self.hsv_colors)
+        elif color_model == 3:
+            print(self.str_colors)
+   # }}}

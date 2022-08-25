@@ -2,8 +2,8 @@
 # gonna parse some gimp palettes 
 
 # IMPORT STATEMENTS{{{
-import gimp_palette_parser as gpp # module file I wrote 
-from gpp import * # gonna use the module file as the namespace basically
+import gimp_palette_parse # module file I wrote 
+from gimp_palette_parse import * # gonna use the module file as the namespace basically
                   # hoping to avoid rewriting anything 
                   # ideally this will function as if all of the stuff defined in
                   # the module was writtin in this file
@@ -17,9 +17,12 @@ from PIL import Image   # export palettes as images so you can preview your work
 # }}}
 # MAIN{{{
 file_path = '../Bears.gpl' # This will eventually be user input
-palette1 = Colors(file_path)
+palette1 = gimp_palette_parse.Colors(file_path)
 int_colors = palette1.int_colors
 hsv_colors = palette1.hsv_colors
+print(int_colors)
+for i in range(0,2):
+    palette1.color_print(i)
 im_hsv = Image.new('HSV',(16,16))
 im_hsv.putdata(hsv_colors)
 im_hsv.show()
