@@ -49,6 +49,18 @@ def list_rgb_to_hsv(rgb_float_colors):
             count = count + 1
         tup = tuple(temp)
     return hsv_colors
+
+def rgb_sort(data,channel,ascending,partition_slice):
+    if channel == 'r' or channel == 0:
+        data_out = sorted(data[partition_slice[0]:partition_slice[1]], key=lambda
+                x:x[0],reverse=ascending)
+    elif channel == 'g' or channel == 1:
+        data_out = sorted(data[partition_slice[0]:partition_slice[1]], key=lambda
+                x:x[1],reverse=ascending)
+    elif channel == 'b' or channel == 2:
+        data_out = sorted(data[partition_slice[0]:partition_slice[1]], key=lambda
+                x:x[2],reverse=ascending)
+    return data_out
 # }}}
 # CLASS DEFS {{{
 class Colors:
