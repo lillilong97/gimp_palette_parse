@@ -15,10 +15,8 @@ import gimp_palette_parse as gpp # module file I wrote
 file_path = '../Bears.gpl' # This will eventually be user input
 palette1 = gpp.Colors(file_path)
 int_colors = palette1.int_colors
-hsv_colors = palette1.hsv_colors
-print(int_colors)
-for i in range(0,2):
-    palette1.color_print(i)
+float_rgb_colors = palette1.float_colors
+hsv_colors = gpp.list_float_to_int(palette1.hsv_colors)
 im_hsv = Image.new('HSV',(16,16))
 im_hsv.putdata(hsv_colors)
 im_hsv.show()
