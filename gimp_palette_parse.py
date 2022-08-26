@@ -3,11 +3,6 @@
 import re
 import colorsys 
 # FUNCTION DEFS{{{
-def int_to_float(int_in):
-    return(float(int_in/255))
-
-def float_to_int(float_in):
-    return(int(float_in*255))
 
 def list_int_to_float(list_in):
     list_out = []
