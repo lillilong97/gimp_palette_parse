@@ -45,7 +45,7 @@ blue_img.show()
 #  sorted_int_tup = []
 #  for c in sorted_int_colors:
 #      sorted_int_tup.append(tuple(c))
-#  img = Image.new('RGB',(16,16))
+#  img = Image.new('RGB',(1:6,16))
 #  #
 #  img.putdata(sorted_int_tup)
 #  #
