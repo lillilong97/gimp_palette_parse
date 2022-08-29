@@ -33,7 +33,7 @@ def str_colors_to_int(str_colors):
        for c in str_colors:
            temp = []
            for val in c:
-               temp.append(int(val))
+               temp.insert(0,int(val))
            int_colors.append(tuple(temp))
        return int_colors
 
@@ -60,6 +60,10 @@ def rgb_sort(data,channel,ascending,partition_slice):
     elif channel == 'b' or channel == 2:
         data_out = sorted(data[partition_slice[0]:partition_slice[1]], key=lambda
                 x:x[2],reverse=ascending)
+
+    if (partition_slice[1] - partition_slice[0]) < len(data):
+        data_out = data[0:partition_slice[0]] + data_out + data[partition_slice[1]:len(data)]
+
     return data_out
 # }}}
 # CLASS DEFS {{{
@@ -74,7 +78,7 @@ class Colors:
 
     def __parse_raw(self,file_path): 
         colors = list()
-        regex = re.compile(r'^\s*\d*\s*\d*\s*\d')
+        regex = re.compile(r'^\s*\d*\s*\d*\s*\d*')
         name_regex = re.compile(r'Name: (.*)')
         with open(file_path) as gpl_file:
             header = gpl_file.readline()
