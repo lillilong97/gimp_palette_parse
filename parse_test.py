@@ -1,10 +1,11 @@
-from PIL import Image,ImageColor
+from PIL import Image,ImageColor,ImagePalette
+import PIL
 import re
 
 regex = re.compile(r'^\s*(?P<R>\d*)\s*(?P<G>\d*)\s*(?P<B>\d*)')
 colors = []
 
-with open('../Bears.gpl') as color_file:
+with open('../Cranes.gpl') as color_file:
     for line in color_file:
         raw = regex.match(line)
         if raw is not None:
@@ -24,7 +25,10 @@ with open('../Bears.gpl') as color_file:
                         item = hex(item)[2:]
                     rgb_str.append(item)
                 rgb_str = '#' + ''.join(rgb_str)
-                print(rgb_str)
                 colors.append(ImageColor.getrgb(rgb_str))
+pal = PIL.ImagePalette.ImagePalette(mode='RGB',palette=None, size=0)
+for c in colors:
+    pal.getcolor(c)
 
-print(colors)
+im = Image.frombytes(mode='RGB',size=(16,15),data=pal.tobytes())
+im.show()
