@@ -19,7 +19,7 @@ int_colors = palette1.int_colors
 float_rgb_colors = palette1.float_colors
 hsv_colors = gpp.list_float_to_int(palette1.hsv_colors)
 str_colors = palette1.str_colors
-
+pal = palette1.palette
 #  im_hsv = Image.new('HSV',(16,16))
 #  im_hsv.putdata(hsv_colors)
 #  im_hsv.show()
@@ -46,8 +46,8 @@ str_colors = palette1.str_colors
 #  green_img.show()
 #
 #
-
-plt.show()
+im = Image.frombytes(mode='RGB',size=(16,15),data=pal.tobytes())
+im.show()
 # }}}
 #  # IMAGE LIBRARY IMAGE{{{
 #  sorted_int_tup = []
